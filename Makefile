@@ -6,4 +6,4 @@ tests:
 	@python pytest testes
 
 local:
-	chalice localSAKDJFAS
+	chalice local
