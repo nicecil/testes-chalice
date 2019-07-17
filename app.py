@@ -34,13 +34,13 @@ def state_of_city(city):
 def put_test(value):
 	return {"value": value}
 
-@app.route('/myview', methods=['POST'])
-def myview_post():
-    pass
-
-@app.route('/myview', methods=['PUT'])
-def myview_put():
-    pass
+@app.route('/todos', methods=['POST'])
+def add_new_todo():
+	body = app.current_request.json_body
+	return get_app_db().add_item(
+		description=body['description'],
+		metadata=body.get('metadata'),
+		)
 
 @app.route('/objects/{key}', methods=['GET', 'PUT'])
 def myobject(key):

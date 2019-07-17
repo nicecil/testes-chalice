@@ -28,7 +28,6 @@ def test_user():
 	nome = 'nickolas'
 	user = User(nome)
 	assert user.nome == 'nickolas'
-	assert user.cpf == None
 	
 def test_userreturn():
 	nome = 'nickolas'
