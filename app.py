@@ -3,7 +3,7 @@ from chalice import BadRequestError
 from chalice import NotFoundError
 import json
 from urllib.parse import urlparse, parse_qs
-from chalicelib.user import root
+from chalicelib.routes import root
 
 OBJECTS = {
 }
@@ -22,10 +22,6 @@ CITIES_TO_STATE = {
 	'riodejaneiro': 'RJ',
 	'saopaulo': 'SP',
 }
-
-@app.route('/')
-def index():
-	return{"Hello":"World"}
 
 @app.route('/{city}')
 def state_of_city(city):
