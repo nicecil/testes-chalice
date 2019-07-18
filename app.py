@@ -5,8 +5,6 @@ import json
 from urllib.parse import urlparse, parse_qs
 from chalicelib.routes import root
 
-OBJECTS = {
-}
 
 app = Chalice(app_name='helloworld')
 app.debug = True
@@ -18,40 +16,27 @@ app.experimental_feature_flags.update([
 app.register_blueprint(root)
 
 
-CITIES_TO_STATE = {
-	'riodejaneiro': 'RJ',
-	'saopaulo': 'SP',
+OBJECTS = {
 }
-
-@app.route('/{city}')
-def state_of_city(city):
-	try:
-		return {'state': CITIES_TO_STATE[city]}
-	except KeyError:
-		raise BadRequestError("Cidade desconhecida '%s', escolhas validas sao: %s" % (city, '/'.join(CITIES_TO_STATE.keys())))
-
-@app.route("/resource/{value}", methods=['PUT'])
-def put_test(value):
-	return {"value": value}
-
-@app.route('/todos', methods=['POST'])
-def add_new_todo():
-	body = app.current_request.json_body
-	return get_app_db().add_item(
-		description=body['description'],
-		metadata=body.get('metadata'),
-		)
 
 @app.route('/objects/{key}', methods=['GET', 'PUT'])
 def myobject(key):
 	request = app.current_request
 	if request.method == 'PUT':
-		OBJECTS[key] = request.json_body
+		if key in OBJECTS.keys():
+			OBJECTS[key].append(request.json_body)
+		else:
+			OBJECTS[key] = [request.json_body]
+		return {"OBJECT SUCCESSFULLY ADDED":"ei"}#type(request.json_body)}
 	elif request.method == 'GET':
 		try:
 			return {key: OBJECTS[key]}
 		except KeyError:
 			raise NotFoundError(key)
+
+@app.route('/objects/all', methods=['GET'])
+def return_all():
+	return OBJECTS
 
 
 @app.route('/introspect')

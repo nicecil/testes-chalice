@@ -1,4 +1,4 @@
-
+import json
 
 
 class User:
@@ -10,3 +10,12 @@ class User:
 		self.endereco = endereco
 		self.telefone = telefone
 
+
+	def user_to_json(self):
+		dict_user = {'nome':self.nome,
+					  'cpf':self.cpf,
+					  'email':self.email,
+					  'endereco':self.endereco,
+					  'telefone':self.telefone}
+		return dict_user
+	
