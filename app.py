@@ -16,29 +16,6 @@ app.experimental_feature_flags.update([
 app.register_blueprint(root)
 
 
-OBJECTS = {
-}
-
-@app.route('/objects/{key}', methods=['GET', 'PUT'])
-def myobject(key):
-	request = app.current_request
-	if request.method == 'PUT':
-		if key in OBJECTS.keys():
-			OBJECTS[key].append(request.json_body)
-		else:
-			OBJECTS[key] = [request.json_body]
-		return {"OBJECT SUCCESSFULLY ADDED":"ei"}#type(request.json_body)}
-	elif request.method == 'GET':
-		try:
-			return {key: OBJECTS[key]}
-		except KeyError:
-			raise NotFoundError(key)
-
-@app.route('/objects/all', methods=['GET'])
-def return_all():
-	return OBJECTS
-
-
 @app.route('/introspect')
 def introspect():
 	return app.current_request.to_dict()

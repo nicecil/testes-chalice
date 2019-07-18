@@ -34,6 +34,15 @@ def get_user(email):
 	else:
 		return {'Usuario nao encontrado':email}
 
+
+@root.route('/user', methods=['GET'])
+def get_all():
+	user_list = []
+	for email in OBJECTS.keys():
+		user_list.append( {email: OBJECTS[email].user_to_json()} )
+
+	return user_list
+
 """def return_all():
 	return OBJECTS"""
 """
