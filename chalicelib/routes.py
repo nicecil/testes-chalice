@@ -1,5 +1,5 @@
 from chalice import Blueprint
-from chalicelib.user import User
+from chalicelib.domain.user import User
 import json
 
 root = Blueprint(__name__)
